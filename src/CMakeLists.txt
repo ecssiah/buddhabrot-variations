@@ -3,7 +3,6 @@ project (GreenFractals)
 
 set(
   HEADERS
-  ./GreenFractals.h
 )
 
 set(

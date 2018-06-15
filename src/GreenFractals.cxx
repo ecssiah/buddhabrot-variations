@@ -1,7 +1,112 @@
-#include "GreenFractals.h"
+#include <Eigen/Geometry>
+#include <Magick++.h>
 
-GreenFractals::GreenFractals()
+#include <array>
+#include <chrono>
+#include <complex>
+#include <iostream>
+#include <random>
+#include <vector>
+#include <sstream>
+#include <iomanip>
+#include <cmath>
+
+using namespace Eigen;
+using namespace Magick;
+using namespace std;
+
+constexpr auto COMPLEX_RANGE(3.0);
+constexpr auto NUM_POINTS(1.6e6);
+
+constexpr auto NUM_FRAMES(100);
+constexpr auto SCREEN_SIZE(1024);
+constexpr auto CONVERSION_FACTOR(SCREEN_SIZE / COMPLEX_RANGE);
+
+static mt19937 RNG;
+
+using CounterArray = array<array<int, SCREEN_SIZE>, SCREEN_SIZE>;
+
+CounterArray ch1_counters;
+CounterArray ch2_counters;
+CounterArray ch3_counters;
+
+array<double, 3 * SCREEN_SIZE * SCREEN_SIZE> pixels;
+
+
+Vector2d to_screen_coords(complex<double> c)
 {
+  return {
+    CONVERSION_FACTOR * c.real() + SCREEN_SIZE / 2,
+    CONVERSION_FACTOR * c.imag() + SCREEN_SIZE / 2
+  };
+}
+
+
+double get_max_count(CounterArray& counters)
+{
+  auto max_count(0);
+  
+  for (const auto& row : counters)
+    for (const auto& count : row)
+      if (count > max_count) max_count = count;
+  
+  return max_count;
+}
+
+
+void fill_counters(
+  CounterArray& counters, unsigned int iterations, double escape_radius, double p, double q, double r)
+{
+  for (auto& row : counters) row.fill(0);
+  
+  for (auto i(0); i < NUM_POINTS; ++i)
+  {
+    uniform_real_distribution<> dist(-COMPLEX_RANGE/2, COMPLEX_RANGE/2);
+    
+    complex<double> z;
+    complex<double> C(dist(RNG), dist(RNG));
+    
+    vector<complex<double>> path;
+    
+    for (auto j(0); j < iterations; ++j)
+    {
+      auto w(conj(z));
+      
+      z = p * pow(w, 6) + q * pow(w, 4) + r * pow(w, 2) + C;
+      
+      path.push_back(z);
+      
+      if (abs(z) > escape_radius)
+      {
+        for (auto c : path)
+        {
+          auto pos1(to_screen_coords(c));
+          
+          if (pos1.x() > 0 && pos1.x() < SCREEN_SIZE && pos1.y() > 0 && pos1.y() < SCREEN_SIZE)
+          {
+            auto pos2(to_screen_coords({ c.real(),-c.imag()}));
+            auto pos3(to_screen_coords({-c.real(), c.imag()}));
+            auto pos4(to_screen_coords({-c.real(),-c.imag()}));
+
+            counters[pos1.y()][pos1.x()] += 1;
+            counters[pos2.y()][pos2.x()] += 1;
+            counters[pos3.y()][pos3.x()] += 1;
+            counters[pos4.y()][pos4.x()] += 1;
+          }
+        }
+        break;
+      }
+    }
+  }
+}
+
+
+int main(int argc, char** argv)
+{
+  InitializeMagick(*argv);
+  
+  RNG.seed(static_cast<unsigned int>(chrono::high_resolution_clock::now().time_since_epoch().count()));
+  
   auto theta(0.0);
   auto delta(1e-2);
   auto offset(2 * M_PI / 3);
@@ -53,88 +158,11 @@ GreenFractals::GreenFractals()
     vec3 = t3 * vec;
     
     ostringstream pathstream;
-    pathstream << "frame" << std::setfill('0') << std::setw(4) << frame << ".jpg";
+    pathstream << "build/frame" << std::setfill('0') << std::setw(4) << frame << ".jpg";
     
     Image image(SCREEN_SIZE, SCREEN_SIZE, "RGB", DoublePixel, &pixels);
     image.write(pathstream.str());
   }
-}
-
-Vector2d GreenFractals::to_screen_coords(complex<double> c)
-{
-  return {
-    CONVERSION_FACTOR * c.real() + SCREEN_SIZE / 2,
-    CONVERSION_FACTOR * c.imag() + SCREEN_SIZE / 2
-  };
-}
-
-
-double GreenFractals::get_max_count(CounterArray& counters)
-{
-  auto max_count(0);
   
-  for (const auto& row : counters)
-    for (const auto& count : row)
-      if (count > max_count) max_count = count;
-  
-  return max_count;
-}
-
-
-void GreenFractals::fill_counters(
-  CounterArray& counters, 
-  unsigned int iterations, double escape_radius, 
-  double p, double q, double r)
-{
-  for (auto& row : counters) row.fill(0);
-  
-  for (auto i(0); i < NUM_POINTS; ++i)
-  {
-    uniform_real_distribution<> dist(-COMPLEX_RANGE/2, COMPLEX_RANGE/2);
-    
-    complex<double> z;
-    complex<double> C(dist(RNG), dist(RNG));
-    
-    vector<complex<double>> path;
-    
-    for (auto j(0); j < iterations; ++j)
-    {
-      auto w(conj(z));
-      
-      z = p * pow(w, 6) + q * pow(w, 4) + r * pow(w, 2) + C;
-      
-      path.push_back(z);
-      
-      if (abs(z) > escape_radius)
-      {
-        for (auto c : path)
-        {
-          auto pos1(to_screen_coords(c));
-          auto in_bounds(
-            pos1.x() > 0 && pos1.y() > 0 &&
-            pos1.x() < SCREEN_SIZE && pos1.y() < SCREEN_SIZE
-          );
-          
-          if (in_bounds)
-          {
-            auto pos2(to_screen_coords({ c.real(),-c.imag()}));
-            auto pos3(to_screen_coords({-c.real(), c.imag()}));
-            auto pos4(to_screen_coords({-c.real(),-c.imag()}));
-
-            counters[pos1.y()][pos1.x()] += 1;
-            counters[pos2.y()][pos2.x()] += 1;
-            counters[pos3.y()][pos3.x()] += 1;
-            counters[pos4.y()][pos4.x()] += 1;
-          }
-        }
-        break;
-      }
-    }
-  }
-}
-
-int main(int argc, char** argv)
-{
-  InitializeMagick(*argv);
-  GreenFractals green_fractals;
+  return 0;
 }
