@@ -3,11 +3,14 @@ project (GreenFractals)
 
 set(
   HEADERS
+  ./src/Constants.hpp
+  ./src/FractalImage.hpp
 )
 
 set(
   SOURCES
-  ./GreenFractals.cxx
+  ./src/FractalImage.cpp
+  ./src/GreenFractals.cpp
 )
 
 set(CMAKE_CXX_STANDARD 11)
@@ -26,4 +29,11 @@ target_link_libraries(
   GreenFractals
   ${ImageMagick_LIBRARIES}
 )
+
+target_compile_options(
+  GreenFractals PRIVATE
+  "-DMAGICKCORE_QUANTUM_DEPTH=16"
+  "-DMAGICKCORE_HDRI_ENABLE=0"
+)
+
 

@@ -11,24 +11,17 @@
 #include <iomanip>
 #include <cmath>
 
+#include "Constants.hpp"
+
 using namespace Eigen;
 using namespace Magick;
 using namespace std;
-
-constexpr auto COMPLEX_RANGE(3.0);
-constexpr auto NUM_POINTS(1.6e6);
-
-constexpr auto NUM_FRAMES(100);
-constexpr auto SCREEN_SIZE(1024);
-constexpr auto CONVERSION_FACTOR(SCREEN_SIZE / COMPLEX_RANGE);
 
 static mt19937 RNG;
 
 using CounterArray = array<array<int, SCREEN_SIZE>, SCREEN_SIZE>;
 
 CounterArray ch1_counters;
-CounterArray ch2_counters;
-CounterArray ch3_counters;
 
 array<double, 3 * SCREEN_SIZE * SCREEN_SIZE> pixels;
 
@@ -72,7 +65,7 @@ void fill_counters(
     {
       auto w(conj(z));
       
-      z = p * pow(w, 6) + q * pow(w, 4) + r * pow(w, 2) + C;
+      z = p * pow(w, 3) + q * pow(w, 2) + r * pow(w, 1) + C;
       
       path.push_back(z);
       
@@ -85,13 +78,9 @@ void fill_counters(
           if (pos1.x() > 0 && pos1.x() < SCREEN_SIZE && pos1.y() > 0 && pos1.y() < SCREEN_SIZE)
           {
             auto pos2(to_screen_coords({ c.real(),-c.imag()}));
-            auto pos3(to_screen_coords({-c.real(), c.imag()}));
-            auto pos4(to_screen_coords({-c.real(),-c.imag()}));
 
             counters[pos1.y()][pos1.x()] += 1;
             counters[pos2.y()][pos2.x()] += 1;
-            counters[pos3.y()][pos3.x()] += 1;
-            counters[pos4.y()][pos4.x()] += 1;
           }
         }
         break;
@@ -108,54 +97,39 @@ int main(int argc, char** argv)
   RNG.seed(static_cast<unsigned int>(chrono::high_resolution_clock::now().time_since_epoch().count()));
   
   auto theta(0.0);
-  auto delta(1e-2);
-  auto offset(2 * M_PI / 3);
+  auto delta(1e-1);
   
-  Vector3f axis1(1, 1, 0);
-  Vector3f axis2(0, 1, 1);
-  Vector3f axis3(1, 0, 1);
+  Vector3f axis1(0, 1, 0);
   
-  Vector3f vec(0, 0, 1);
+  Vector3f vec(.3, .4, 1);
   auto vec1(vec), vec2(vec), vec3(vec);
   Vector3f hue(1.00, 1.00, 1.00);
   
   axis1.normalize();
-  axis2.normalize();
-  axis3.normalize();
 
   for (auto frame(0); frame < NUM_FRAMES; ++frame)
   {
     fill_counters(ch1_counters, 100, 1.0, vec1.x(), vec1.y(), vec1.z());
-    fill_counters(ch2_counters, 100, 1.0, vec2.x(), vec2.y(), vec2.z());
-    fill_counters(ch3_counters, 100, 1.0, vec3.x(), vec3.y(), vec3.z());
     
     auto ch1_max(get_max_count(ch1_counters));
-    auto ch2_max(get_max_count(ch2_counters));
-    auto ch3_max(get_max_count(ch3_counters));
     
     for (auto x(0); x < SCREEN_SIZE; ++x)
     {
       for (auto y(0); y < SCREEN_SIZE; ++y)
       {
         auto ch1_value((double)ch1_counters[x][y] / ch1_max);
-        auto ch2_value((double)ch2_counters[x][y] / ch2_max);
-        auto ch3_value((double)ch3_counters[x][y] / ch3_max);
         
         pixels[3 * (x + y * SCREEN_SIZE) + 0] = hue[0] * ch1_value;
-        pixels[3 * (x + y * SCREEN_SIZE) + 1] = hue[1] * ch2_value;
-        pixels[3 * (x + y * SCREEN_SIZE) + 2] = hue[2] * ch3_value;
+        pixels[3 * (x + y * SCREEN_SIZE) + 1] = hue[1] * ch1_value;
+        pixels[3 * (x + y * SCREEN_SIZE) + 2] = hue[2] * ch1_value;
       }
     }
     
     theta += delta;
     
-    auto t1(AngleAxis<float>(theta +  0 * offset, axis1));
-    auto t2(AngleAxis<float>(theta +  0 * offset, axis2));
-    auto t3(AngleAxis<float>(theta +  0 * offset, axis3));
+    auto t1(AngleAxis<float>(theta, axis1));
     
     vec1 = t1 * vec;
-    vec2 = t2 * vec;
-    vec3 = t3 * vec;
     
     ostringstream pathstream;
     pathstream << "build/frame" << std::setfill('0') << std::setw(4) << frame << ".jpg";
