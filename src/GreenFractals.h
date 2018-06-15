@@ -14,24 +14,28 @@
 #include <iomanip>
 #include <cmath>
 
+constexpr auto COMPLEX_RANGE(3.0);
+constexpr auto NUM_POINTS(4.6e6);
+
+constexpr auto NUM_FRAMES(100);
+constexpr auto SCREEN_SIZE(1024);
+constexpr auto CONVERSION_FACTOR(SCREEN_SIZE / COMPLEX_RANGE);
+
+using namespace std;
+using namespace Eigen;
+using namespace Magick;
+
+using CounterArray = array<array<int, SCREEN_SIZE>, SCREEN_SIZE>;
+
 class GreenFractals 
 {
-  constexpr auto COMPLEX_RANGE(3.0);
-  constexpr auto NUM_POINTS(4.6e6);
-
-  constexpr auto NUM_FRAMES(2000);
-  constexpr auto SCREEN_SIZE(1024);
-  constexpr auto CONVERSION_FACTOR(SCREEN_SIZE / COMPLEX_RANGE);
-
-  static mt19937 RNG;
-
-  using CounterArray = array<array<int, SCREEN_SIZE>, SCREEN_SIZE>;
-
   CounterArray ch1_counters;
   CounterArray ch2_counters;
   CounterArray ch3_counters;
 
   array<double, 3 * SCREEN_SIZE * SCREEN_SIZE> pixels;
+
+  default_random_engine RNG;
 
 public:
   GreenFractals();

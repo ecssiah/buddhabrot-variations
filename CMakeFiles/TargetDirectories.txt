@@ -1,0 +1,3 @@
+/Users/michaelchapman/Development/green-fractals/CMakeFiles/rebuild_cache.dir
+/Users/michaelchapman/Development/green-fractals/CMakeFiles/edit_cache.dir
+/Users/michaelchapman/Development/green-fractals/CMakeFiles/GreenFractals.dir

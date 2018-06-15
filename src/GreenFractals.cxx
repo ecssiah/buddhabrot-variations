@@ -1,15 +1,6 @@
 #include "GreenFractals.h"
 
-using namespace Eigen;
-using namespace Magick;
-using namespace std;
-
 GreenFractals::GreenFractals()
-  : RNG(
-      static_cast<unsigned int>(
-        chrono::high_resolution_clock::now().time_since_epoch().count()
-      )
-    )
 {
   auto theta(0.0);
   auto delta(1e-2);

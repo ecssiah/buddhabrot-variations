@@ -11,12 +11,12 @@ set(
   ./GreenFractals.cxx
 )
 
+set(CMAKE_CXX_STANDARD 11)
+
 add_executable(GreenFractals ${HEADERS} ${SOURCES})
 
-target_compile_features(GreenFractals PRIVATE cxx_range_for)
-
 find_package(Eigen3 REQUIRED)
-find_package(ImageMagick REQUIRED)
+find_package(ImageMagick COMPONENTS Magick++ REQUIRED)
 
 include_directories(
   ${EIGEN3_INCLUDE_DIR}
