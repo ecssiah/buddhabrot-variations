@@ -1,1 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/c++   -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/GreenFractals.dir/GreenFractals.cxx.o  -o GreenFractals /usr/local/lib/libMagick++-7.Q16HDRI.dylib 
