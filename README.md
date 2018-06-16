@@ -12,9 +12,9 @@ This application expands her original technique. The equation used to iterate th
 
 An example generating function will look like this:
 
-`w = conj(z)`
+w = conj(z)
 
-`z = Pw<sup>3</sup> + Qw<sup>2</sup> + Rw + C` 
+z = Pw<sup>3</sup> + Qw<sup>2</sup> + Rw + C
 
 `C` is the starting point for each test, which is chosen at random from points within the desired complex range. 
 
