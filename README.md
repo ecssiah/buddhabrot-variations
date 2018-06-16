@@ -14,7 +14,7 @@ An example generating function will look like this:
 
 `w = conj(z)`
 
-`z = P * w^3 + Q * w^2 + R * w^1 + C` 
+`z = Pw<sup>3</sup> + Qw<sup>2</sup> + Rw + C` 
 
 `C` is the starting point for each test, which is chosen at random from points within the desired complex range. 
 
