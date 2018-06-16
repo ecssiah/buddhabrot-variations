@@ -20,7 +20,7 @@ z = Pw<sup>3</sup> + Qw<sup>2</sup> + Rw + C
 
 This will produce a generalized fractal based on the Buddhabrot method developed by Green. I have called the range of fractals generated using this expanded method: Green Fractals.
 
-The application is also set up to produce a series of these fractals, which can be combined together to produce animations. The general approach is to treat the coefficients of the generating function as a vector <P, Q, R>, and then transform this vector by small amounts to produce slight variations. This series of fractals can then be combined together to form a smooth animation.
+The application is also set up to produce a series of these fractals, which can be combined together to create animations. The general approach is to treat the coefficients of the generating function as a vector <P, Q, R>, and then transform this vector by small amounts to produce slight variations. This series of fractals can then be combined together to form a smooth animation.
 
 Here is an example of this animation technique:
 
