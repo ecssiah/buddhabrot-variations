@@ -1,6 +1,6 @@
 # Green Fractals
 
-![example image](https://raw.githubusercontent.com/ecssiah/green-fractals/master/examples/example1.jpg)
+![example image](https://raw.githubusercontent.com/ecssiah/green-fractals/master/examples/example1.jpg =640x640)
 
 This application generates fractals using a variation of the Buddhabrot method discovered by Melinda Green.
 
