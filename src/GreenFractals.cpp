@@ -28,16 +28,16 @@ int main(int argc, char** argv)
   
   axis1.normalize();
 
-  FractalInstance::num_points = 2e6;
+  FractalInstance::num_points = 2.4e6;
   FractalInstance::complex_range = 3.6;
   FractalInstance::default_radius = 3;
-  FractalInstance::default_iterations = 1e3;
+  FractalInstance::default_iterations = 2e3;
 
   for (auto frame(0); frame < NUM_FRAMES; ++frame)
   {
     FractalInstance fi(
-      {1, 1, 1/2.0, 1/6.0, 1/24.0, 1/120.0, 1/720.0}, 
-      {0, 1, 2,     3,     4,      5,       6      }
+      {1, 1/2.0, 1/6.0, 1/24.0, 1/120.0, 1/720.0}, 
+      {1, 2,     3,     4,      5,       6      }
     );
 
     ImageGenerator::generate(fi, frame);
