@@ -2,7 +2,6 @@
 #define IMAGE_GENERATOR_H
 
 #include <array>
-#include <vector>
 #include <iostream>
 #include <iomanip>
 #include <sstream>
