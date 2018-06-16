@@ -8,10 +8,20 @@
 #include <iomanip>
 #include <cmath>
 
+#include <Eigen/Geometry>
+#include <Magick++.h>
+
 #include "Constants.hpp"
 #include "FractalInstance.hpp"
 
 static mt19937 RNG;
+static default_random_engine generator;
+
+using namespace std;
+using namespace Eigen;
+using namespace Magick;
+
+using CounterArray = array<array<int, SCREEN_SIZE>, SCREEN_SIZE>;
 
 CounterArray ch1_counters;
 
@@ -51,7 +61,7 @@ void fill_counters(
     uniform_real_distribution<> dist(-COMPLEX_RANGE/2, COMPLEX_RANGE/2);
     
     complex<double> z;
-    complex<double> C(dist(rand_eng), dist(rand_eng));
+    complex<double> C(dist(generator), dist(generator));
     
     vector<complex<double>> path;
     
@@ -90,11 +100,11 @@ int main(int argc, char** argv)
   
   RNG.seed(static_cast<unsigned int>(chrono::high_resolution_clock::now().time_since_epoch().count()));
 
-  rand_eng.seed(
-    static_cast<unsigned int>(
-      chrono::high_resolution_clock::now().time_since_epoch().count()
-    )
-  );  
+  /* rand_eng.seed( */
+  /*   static_cast<unsigned int>( */
+  /*     chrono::high_resolution_clock::now().time_since_epoch().count() */
+  /*   ) */
+  /* ); */  
   
   auto theta(0.0);
   auto delta(1e-1);
@@ -134,7 +144,7 @@ int main(int argc, char** argv)
     vec1 = t1 * vec;
     
     ostringstream pathstream;
-    pathstream << "build/frame" << std::setfill('0') << std::setw(4) << frame << ".jpg";
+    pathstream << "frames/frame" << std::setfill('0') << std::setw(4) << frame << ".jpg";
     
     Image image(SCREEN_SIZE, SCREEN_SIZE, "RGB", DoublePixel, &pixels);
     image.write(pathstream.str());

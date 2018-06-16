@@ -36,4 +36,4 @@ target_compile_options(
   "-DMAGICKCORE_HDRI_ENABLE=0"
 )
 
-
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/frames)

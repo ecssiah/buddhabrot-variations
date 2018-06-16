@@ -1,5 +1,8 @@
 #include "FractalInstance.hpp"
 
+unsigned FractalInstance::default_iterations = 100;
+double FractalInstance::default_radius = 1.0;
+
 FractalInstance::FractalInstance(
   vector<double> coefficients_, vector<double> exponents_,
   unsigned iterations_, double escape_radius_ 
@@ -7,10 +10,12 @@ FractalInstance::FractalInstance(
   : coefficients(coefficients_),
     exponents(exponents_),
     iterations(iterations_),
-    escape_radius(escape_radius_)
+    escape_radius(escape_radius_),
+    pixels(3 * SCREEN_SIZE * SCREEN_SIZE)
 {
   
 }
+
 
 void FractalInstance::setCoefficients(vector<double> coefficients_)
 {
@@ -52,7 +57,7 @@ void FractalInstance::build()
     uniform_real_distribution<> dist(-COMPLEX_RANGE/2, COMPLEX_RANGE/2);
     
     complex<double> z;
-    complex<double> C(dist(rand_eng), dist(rand_eng));
+    complex<double> C(dist(generator), dist(generator));
     
     vector<complex<double>> path;
     
