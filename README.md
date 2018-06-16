@@ -10,9 +10,9 @@ Here is Melinda's page describing the process and displaying a number of example
 
 This application expands her original technique. The equation used to iterate the points is customizable. Any number of terms of varying degrees are combined together along with matching coefficients to create the generating function. On top of this, at each step in the process the previous value is conjugated before applying the equation again.
 
-An example generating function will look like this:
+Here is an example of a generating function:
 
-w = conj(z)
+w = conjugate(z)
 
 z = Pw<sup>3</sup> + Qw<sup>2</sup> + Rw + C
 
