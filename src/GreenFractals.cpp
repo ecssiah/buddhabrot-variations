@@ -15,11 +15,6 @@ using namespace Magick;
 
 vector<FractalInstance> fractals;
 
-double fact(double n)
-{
-  return (n == 1 || n == 0) ? 1 : fact(n - 1) * n;
-}
-
 int main(int argc, char** argv)
 {
   InitializeMagick(*argv);
@@ -39,8 +34,8 @@ int main(int argc, char** argv)
   for (auto frame(0); frame < NUM_FRAMES; ++frame)
   {
     FractalInstance fi(
-      {1, 1, 1/fact(2), 1/fact(3), 1/fact(4), 1/fact(5), 1/fact(6)}, 
-      {0, 1, 2,         3,         4,         5,         6}
+      {1, 1, 1/2.0, 1/6.0, 1/24.0, 1/120.0, 1/720.0}, 
+      {0, 1, 2,     3,     4,      5,       6      }
     );
 
     ImageGenerator::generate(fi, frame);
