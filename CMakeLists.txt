@@ -4,12 +4,12 @@ project (GreenFractals)
 set(
   HEADERS
   ./src/Constants.hpp
-  ./src/FractalImage.hpp
+  ./src/FractalInstance.hpp
 )
 
 set(
   SOURCES
-  ./src/FractalImage.cpp
+  ./src/FractalInstance.cpp
   ./src/GreenFractals.cpp
 )
 

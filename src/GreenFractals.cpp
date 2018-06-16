@@ -1,6 +1,3 @@
-#include <Eigen/Geometry>
-#include <Magick++.h>
-
 #include <array>
 #include <chrono>
 #include <complex>
@@ -12,19 +9,13 @@
 #include <cmath>
 
 #include "Constants.hpp"
-
-using namespace Eigen;
-using namespace Magick;
-using namespace std;
+#include "FractalInstance.hpp"
 
 static mt19937 RNG;
-
-using CounterArray = array<array<int, SCREEN_SIZE>, SCREEN_SIZE>;
 
 CounterArray ch1_counters;
 
 array<double, 3 * SCREEN_SIZE * SCREEN_SIZE> pixels;
-
 
 Vector2d to_screen_coords(complex<double> c)
 {
@@ -48,7 +39,10 @@ double get_max_count(CounterArray& counters)
 
 
 void fill_counters(
-  CounterArray& counters, unsigned int iterations, double escape_radius, double p, double q, double r)
+  CounterArray& counters, 
+  unsigned int iterations, double escape_radius, 
+  double p, double q, double r
+)
 {
   for (auto& row : counters) row.fill(0);
   
@@ -57,7 +51,7 @@ void fill_counters(
     uniform_real_distribution<> dist(-COMPLEX_RANGE/2, COMPLEX_RANGE/2);
     
     complex<double> z;
-    complex<double> C(dist(RNG), dist(RNG));
+    complex<double> C(dist(rand_eng), dist(rand_eng));
     
     vector<complex<double>> path;
     
@@ -95,6 +89,12 @@ int main(int argc, char** argv)
   InitializeMagick(*argv);
   
   RNG.seed(static_cast<unsigned int>(chrono::high_resolution_clock::now().time_since_epoch().count()));
+
+  rand_eng.seed(
+    static_cast<unsigned int>(
+      chrono::high_resolution_clock::now().time_since_epoch().count()
+    )
+  );  
   
   auto theta(0.0);
   auto delta(1e-1);
@@ -106,6 +106,8 @@ int main(int argc, char** argv)
   Vector3f hue(1.00, 1.00, 1.00);
   
   axis1.normalize();
+
+  FractalInstance fi({1, 1, 1}, {3, 2, 1});
 
   for (auto frame(0); frame < NUM_FRAMES; ++frame)
   {
