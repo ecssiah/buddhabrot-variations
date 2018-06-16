@@ -26,6 +26,6 @@ Here is an example of this animation technique:
 
 [Fractals in Motion](https://www.youtube.com/watch?v=lS3p8Gt9PLU)
 
-#Contributions
+# Contributions
 
 This software is available under the [MIT Open Source License](https://github.com/ecssiah/green-fractals/blob/master/LICENSE.txt). Contributions to the project are welcome at [](https://github.com/ecssiah/green-fractals). I would also appreciate it if users shared the fractals and animations they generate using this technique. I can be contacted at [](ecssiah@gmail.com).   
