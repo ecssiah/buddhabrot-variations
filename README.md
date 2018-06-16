@@ -1,6 +1,6 @@
 # Green Fractals
 
-This application generates fractal animations using the method discovered by Melinda Green to visualize the Mandelbrot set (often referred to as a Buddhabrot).
+This application generates fractal animations using the method discovered by Melinda Green to visualize the Mandelbrot set (her version is often referred to as a Buddhabrot).
 
 Melinda's technique samples points in the complex plane, and then tests them through repeated iteration to see if they eventually land outside of a specified escape radius. The number of iterations it takes for an initial value to escape is stored in an array. This array is used as a heat map to produce a representation of the Mandelbrot set.
 

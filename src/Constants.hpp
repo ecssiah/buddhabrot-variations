@@ -1,8 +1,8 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-constexpr auto COMPLEX_RANGE(3.0);
-constexpr auto NUM_POINTS(1e6);
+constexpr auto COMPLEX_RANGE(4.0);
+constexpr auto NUM_POINTS(2e6);
 
 constexpr auto NUM_FRAMES(100);
 constexpr auto SCREEN_SIZE(1400);

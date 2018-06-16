@@ -42,7 +42,7 @@ public:
     Image image(SCREEN_SIZE, SCREEN_SIZE, "RGB", DoublePixel, pixels);
     image.write(pathstream.str());
 
-    delete [] pixels;
+    delete[] pixels;
   }
 
 };

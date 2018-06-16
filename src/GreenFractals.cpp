@@ -29,17 +29,17 @@ int main(int argc, char** argv)
   auto delta(2 * M_PI / 100);
   
   Vector3f axis1(1, 1, 0);
-  Vector3f vec(.8, -.5, -1);
+  Vector3f vec(-.1, -.2, -.4);
   auto vec1(vec), vec2(vec), vec3(vec);
   
   axis1.normalize();
 
-  FractalInstance::default_radius = 1.6;
-  FractalInstance::default_iterations = 1e3;
+  FractalInstance::default_radius = 30;
+  FractalInstance::default_iterations = 2e2;
 
   for (auto frame(0); frame < NUM_FRAMES; ++frame)
   {
-    FractalInstance fi({vec1.x(), vec1.y(), vec1.z()}, {4, 2, 1});
+    FractalInstance fi({vec1.x(), vec1.y(), vec1.z(), -.8, -1}, {5, 4, 3, 2, 1});
 
     ImageGenerator::generate(fi, frame);
 
