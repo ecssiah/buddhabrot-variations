@@ -1,7 +1,10 @@
 #include "FractalInstance.hpp"
 
+unsigned FractalInstance::num_points = 1e6;
 unsigned FractalInstance::default_iterations = 100;
+
 double FractalInstance::default_radius = 1.0;
+double FractalInstance::complex_range = 3.6;
 
 FractalInstance::FractalInstance(
   vector<double> coefficients_, vector<double> exponents_,
@@ -28,9 +31,11 @@ void FractalInstance::setExponents(vector<double> exponents_)
 
 Vector2d FractalInstance::to_screen_coords(complex<double> c)
 {
+  auto conversion_factor = SCREEN_SIZE / complex_range; 
+
   return {
-    CONVERSION_FACTOR * c.real() + SCREEN_SIZE / 2,
-    CONVERSION_FACTOR * c.imag() + SCREEN_SIZE / 2
+    conversion_factor * c.real() + SCREEN_SIZE / 2,
+    conversion_factor * c.imag() + SCREEN_SIZE / 2
   };
 }
 
@@ -51,9 +56,9 @@ void FractalInstance::build()
 {
   for (auto& row : counters) row.fill(0);
   
-  for (auto i(0); i < NUM_POINTS; ++i)
+  for (auto i(0); i < num_points; ++i)
   {
-    uniform_real_distribution<> dist(-COMPLEX_RANGE/2, COMPLEX_RANGE/2);
+    uniform_real_distribution<> dist(-complex_range / 2, complex_range / 2);
     
     complex<double> z;
     complex<double> C(dist(generator), dist(generator));

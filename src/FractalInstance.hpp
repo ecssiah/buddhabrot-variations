@@ -49,8 +49,11 @@ public:
   void setCoefficients(vector<double> coefficients);
   void setExponents(vector<double> exponents);
 
-  static unsigned default_iterations;
   static double default_radius;
+  static double complex_range;
+
+  static unsigned num_points;
+  static unsigned default_iterations;
 };
 
 #endif // FRACTAL_IMAGE_H

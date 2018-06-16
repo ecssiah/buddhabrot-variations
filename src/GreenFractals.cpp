@@ -23,13 +23,15 @@ int main(int argc, char** argv)
   auto delta(2 * M_PI / 100);
   
   Vector3f axis1(1, 1, 0);
-  Vector3f vec(1, 1 / fact(2), 1 / fact(3));
+  Vector3f vec(1, 1, 1);
   auto vec1(vec);
   
   axis1.normalize();
 
+  FractalInstance::num_points = 2e6;
+  FractalInstance::complex_range = 3.6;
   FractalInstance::default_radius = 3;
-  FractalInstance::default_iterations = 4e3;
+  FractalInstance::default_iterations = 1e3;
 
   for (auto frame(0); frame < NUM_FRAMES; ++frame)
   {
