@@ -27,19 +27,22 @@ int main(int argc, char** argv)
   InitializeMagick(*argv);
   
   auto theta(0.0);
-  auto delta(1e-1);
+  auto delta(2 * M_PI / 100);
   
   Vector3f axis1(0, 1, 0);
   
-  Vector3f vec(.3, .4, 1);
+  Vector3f vec(-.1, 1, -1);
   auto vec1(vec), vec2(vec), vec3(vec);
   Vector3f hue(1.00, 1.00, 1.00);
   
   axis1.normalize();
 
+  FractalInstance::default_iterations = 1e2;
+  FractalInstance::default_radius = 1.6;
+
   for (auto frame(0); frame < NUM_FRAMES; ++frame)
   {
-    FractalInstance fi({vec1.x(), vec1.y(), vec1.z()});
+    FractalInstance fi({vec1.x(), vec1.y(), vec1.z()}, {4, 2, 1});
     
     auto max(fi.get_max_count());
     
