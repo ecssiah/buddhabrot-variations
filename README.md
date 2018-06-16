@@ -15,6 +15,7 @@ To create the animations, a higher degree generating function is used. The usual
 The degrees used by this application can be customized, but at least three unique terms are usually used, along with a series of coefficients that drive the animations. Before calculating the next step, the previous value is also replaced with its conjugate:
 
 `w = conj(z)`
+
 `z = P * w^3 + Q * w^2 + R * w^1 + C` 
 
 A single image is created by iterating the equation with a specific set of coefficients. Then the coefficients are transformed as a vector (<P, Q, R>). This slightly alters the image that is produced, allowing the creation of the animations. 

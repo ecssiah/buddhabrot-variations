@@ -27,7 +27,6 @@ class FractalInstance
 {  
   void build();
 
-  double get_max_count();
   Vector2d to_screen_coords(complex<double> c);
 
   default_random_engine generator;
@@ -38,7 +37,6 @@ class FractalInstance
   vector<double> coefficients;
   vector<double> exponents; 
 
-  CounterArray counters;
   PixelArray pixels;
 
 public:
@@ -48,6 +46,10 @@ public:
     unsigned iterations = default_iterations, 
     double escape_radius = default_radius
   );
+
+  CounterArray counters;
+
+  double get_max_count();
 
   void setCoefficients(vector<double> coefficients);
   void setExponents(vector<double> exponents);

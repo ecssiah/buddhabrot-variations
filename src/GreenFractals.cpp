@@ -14,83 +14,12 @@
 #include "Constants.hpp"
 #include "FractalInstance.hpp"
 
-static default_random_engine generator;
-
 using namespace std;
 using namespace Eigen;
 using namespace Magick;
 
-using CounterArray = array<array<int, SCREEN_SIZE>, SCREEN_SIZE>;
-
-CounterArray ch1_counters;
-
+vector<FractalInstance> fractals;
 array<double, 3 * SCREEN_SIZE * SCREEN_SIZE> pixels;
-
-Vector2d to_screen_coords(complex<double> c)
-{
-  return {
-    CONVERSION_FACTOR * c.real() + SCREEN_SIZE / 2,
-    CONVERSION_FACTOR * c.imag() + SCREEN_SIZE / 2
-  };
-}
-
-
-double get_max_count(CounterArray& counters)
-{
-  auto max_count(0);
-  
-  for (const auto& row : counters)
-    for (const auto& count : row)
-      if (count > max_count) max_count = count;
-  
-  return max_count;
-}
-
-
-void fill_counters(
-  CounterArray& counters, 
-  unsigned int iterations, double escape_radius, 
-  double p, double q, double r
-)
-{
-  for (auto& row : counters) row.fill(0);
-  
-  for (auto i(0); i < NUM_POINTS; ++i)
-  {
-    uniform_real_distribution<> dist(-COMPLEX_RANGE/2, COMPLEX_RANGE/2);
-    
-    complex<double> z;
-    complex<double> C(dist(generator), dist(generator));
-    
-    vector<complex<double>> path;
-    
-    for (auto j(0); j < iterations; ++j)
-    {
-      auto w(conj(z));
-      
-      z = p * pow(w, 3) + q * pow(w, 2) + r * pow(w, 1) + C;
-      
-      path.push_back(z);
-      
-      if (abs(z) > escape_radius)
-      {
-        for (auto c : path)
-        {
-          auto pos1(to_screen_coords(c));
-          
-          if (pos1.x() > 0 && pos1.x() < SCREEN_SIZE && pos1.y() > 0 && pos1.y() < SCREEN_SIZE)
-          {
-            auto pos2(to_screen_coords({ c.real(),-c.imag()}));
-
-            counters[pos1.y()][pos1.x()] += 1;
-            counters[pos2.y()][pos2.x()] += 1;
-          }
-        }
-        break;
-      }
-    }
-  }
-}
 
 
 int main(int argc, char** argv)
@@ -108,23 +37,21 @@ int main(int argc, char** argv)
   
   axis1.normalize();
 
-  FractalInstance fi({1, 1, 1}, {3, 2, 1});
-
   for (auto frame(0); frame < NUM_FRAMES; ++frame)
   {
-    fill_counters(ch1_counters, 100, 1.0, vec1.x(), vec1.y(), vec1.z());
+    FractalInstance fi({vec1.x(), vec1.y(), vec1.z()});
     
-    auto ch1_max(get_max_count(ch1_counters));
+    auto max(fi.get_max_count());
     
     for (auto x(0); x < SCREEN_SIZE; ++x)
     {
       for (auto y(0); y < SCREEN_SIZE; ++y)
       {
-        auto ch1_value((double)ch1_counters[x][y] / ch1_max);
+        auto value((double)fi.counters[x][y] / max);
         
-        pixels[3 * (x + y * SCREEN_SIZE) + 0] = hue[0] * ch1_value;
-        pixels[3 * (x + y * SCREEN_SIZE) + 1] = hue[1] * ch1_value;
-        pixels[3 * (x + y * SCREEN_SIZE) + 2] = hue[2] * ch1_value;
+        pixels[3 * (x + y * SCREEN_SIZE) + 0] = hue[0] * value;
+        pixels[3 * (x + y * SCREEN_SIZE) + 1] = hue[1] * value;
+        pixels[3 * (x + y * SCREEN_SIZE) + 2] = hue[2] * value;
       }
     }
     

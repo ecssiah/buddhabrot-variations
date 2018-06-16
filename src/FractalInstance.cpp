@@ -13,7 +13,7 @@ FractalInstance::FractalInstance(
     escape_radius(escape_radius_),
     pixels(3 * SCREEN_SIZE * SCREEN_SIZE)
 {
-  
+  build();  
 }
 
 
@@ -68,9 +68,7 @@ void FractalInstance::build()
       z = C;
 
       for (int i = 0; i < coefficients.size(); ++i)
-      {
         z += coefficients[i] * pow(w, exponents[i]);
-      }
       
       path.push_back(z);
       
