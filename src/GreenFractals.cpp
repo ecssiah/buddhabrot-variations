@@ -14,7 +14,6 @@
 #include "Constants.hpp"
 #include "FractalInstance.hpp"
 
-static mt19937 RNG;
 static default_random_engine generator;
 
 using namespace std;
@@ -97,14 +96,6 @@ void fill_counters(
 int main(int argc, char** argv)
 {
   InitializeMagick(*argv);
-  
-  RNG.seed(static_cast<unsigned int>(chrono::high_resolution_clock::now().time_since_epoch().count()));
-
-  /* rand_eng.seed( */
-  /*   static_cast<unsigned int>( */
-  /*     chrono::high_resolution_clock::now().time_since_epoch().count() */
-  /*   ) */
-  /* ); */  
   
   auto theta(0.0);
   auto delta(1e-1);
