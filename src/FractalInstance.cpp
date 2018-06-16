@@ -10,8 +10,7 @@ FractalInstance::FractalInstance(
   : coefficients(coefficients_),
     exponents(exponents_),
     iterations(iterations_),
-    escape_radius(escape_radius_),
-    pixels(3 * SCREEN_SIZE * SCREEN_SIZE)
+    escape_radius(escape_radius_)
 {
   build();  
 }
@@ -36,7 +35,7 @@ Vector2d FractalInstance::to_screen_coords(complex<double> c)
 }
 
 
-double FractalInstance::get_max_count()
+const double FractalInstance::get_max_count()
 {
   auto max_count(0);
   

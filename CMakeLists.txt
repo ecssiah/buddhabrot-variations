@@ -4,6 +4,7 @@ project (GreenFractals)
 set(
   HEADERS
   ./src/Constants.hpp
+  ./src/ImageGenerator.hpp
   ./src/FractalInstance.hpp
 )
 

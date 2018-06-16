@@ -21,7 +21,6 @@ using namespace Eigen;
 using namespace Magick;
 
 using CounterArray = array<array<int, SCREEN_SIZE>, SCREEN_SIZE>;
-using PixelArray = vector<double>;
 
 class FractalInstance
 {  
@@ -37,8 +36,6 @@ class FractalInstance
   vector<double> coefficients;
   vector<double> exponents; 
 
-  PixelArray pixels;
-
 public:
   FractalInstance(
     vector<double> coefficients = {1, 1, 1}, 
@@ -49,7 +46,7 @@ public:
 
   CounterArray counters;
 
-  double get_max_count();
+  const double get_max_count();
 
   void setCoefficients(vector<double> coefficients);
   void setExponents(vector<double> exponents);
