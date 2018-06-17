@@ -4,8 +4,8 @@ project (GreenFractals)
 set(
   HEADERS
   ./src/Constants.hpp
-  ./src/ImageGenerator.hpp
   ./src/FractalInstance.hpp
+  ./src/ImageGenerator.hpp
 )
 
 set(
@@ -37,4 +37,5 @@ target_compile_options(
   "-DMAGICKCORE_HDRI_ENABLE=0"
 )
 
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/images)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/frames)

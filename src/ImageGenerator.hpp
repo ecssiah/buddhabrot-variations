@@ -12,6 +12,7 @@
 #include "Constants.hpp"
 #include "FractalInstance.hpp"
 
+using namespace std;
 
 class ImageGenerator
 {
@@ -42,7 +43,7 @@ public:
     {
       pathstream << "images/green-fractal-" << time(nullptr) << ".jpg";
     } else {
-      pathstream << "frames/frame" << std::setfill('0') << std::setw(4) << frame << ".jpg";
+      pathstream << "frames/frame" << setfill('0') << setw(4) << frame << ".jpg";
     }
 
     Image image(SCREEN_SIZE, SCREEN_SIZE, "RGB", DoublePixel, pixels);

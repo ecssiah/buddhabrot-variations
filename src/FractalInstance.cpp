@@ -69,7 +69,7 @@ void FractalInstance::build()
     for (auto j(0); j < iterations; ++j)
     {
       auto w(conj(z));
-      
+
       z = C;
 
       for (int i = 0; i < coefficients.size(); ++i)
@@ -82,10 +82,13 @@ void FractalInstance::build()
         for (auto c : path)
         {
           auto pos1(to_screen_coords(c));
+
+          auto in_x(pos1.x() > 0 && pos1.x() < SCREEN_SIZE);
+          auto in_y(pos1.y() > 0 && pos1.y() < SCREEN_SIZE);
           
-          if (pos1.x() > 0 && pos1.x() < SCREEN_SIZE && pos1.y() > 0 && pos1.y() < SCREEN_SIZE)
+          if (in_x && in_y)
           {
-            auto pos2(to_screen_coords({ c.real(),-c.imag() }));
+            auto pos2(to_screen_coords(conj(c)));
 
             counters[pos1.y()][pos1.x()] += 1;
             counters[pos2.y()][pos2.x()] += 1;
@@ -97,7 +100,8 @@ void FractalInstance::build()
 
     if (i % 1000000 == 0)
     {
-      cout << (i / (double)num_points * 100) << "% : " << get_max_count() << endl;
+      auto percent_complete(i / (double)num_points * 100);
+      cout << percent_complete << "% : " << get_max_count() << endl;
     }
   }
 }
