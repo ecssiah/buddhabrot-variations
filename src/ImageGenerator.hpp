@@ -5,6 +5,7 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <ctime>
 
 #include <Magick++.h>
 
@@ -36,7 +37,13 @@ public:
     }
 
     ostringstream pathstream;
-    pathstream << "frames/frame" << std::setfill('0') << std::setw(4) << frame << ".jpg";
+
+    if (frame == 0)
+    {
+      pathstream << "images/green-fractal-" << time(nullptr) << ".jpg";
+    } else {
+      pathstream << "frames/frame" << std::setfill('0') << std::setw(4) << frame << ".jpg";
+    }
 
     Image image(SCREEN_SIZE, SCREEN_SIZE, "RGB", DoublePixel, pixels);
     image.write(pathstream.str());

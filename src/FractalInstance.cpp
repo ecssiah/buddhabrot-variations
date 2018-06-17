@@ -13,7 +13,8 @@ FractalInstance::FractalInstance(
   : coefficients(coefficients_),
     exponents(exponents_),
     iterations(iterations_),
-    escape_radius(escape_radius_)
+    escape_radius(escape_radius_),
+    counters(SCREEN_SIZE, vector<unsigned>(SCREEN_SIZE))
 {
   build();  
 }
@@ -54,7 +55,7 @@ const double FractalInstance::get_max_count()
 
 void FractalInstance::build()
 {
-  for (auto& row : counters) row.fill(0);
+  for (auto& row : counters) fill(row.begin(), row.end(), 0);
   
   for (auto i(0); i < num_points; ++i)
   {
@@ -84,7 +85,7 @@ void FractalInstance::build()
           
           if (pos1.x() > 0 && pos1.x() < SCREEN_SIZE && pos1.y() > 0 && pos1.y() < SCREEN_SIZE)
           {
-            auto pos2(to_screen_coords({ c.real(),-c.imag()}));
+            auto pos2(to_screen_coords({ c.real(),-c.imag() }));
 
             counters[pos1.y()][pos1.x()] += 1;
             counters[pos2.y()][pos2.x()] += 1;
@@ -92,6 +93,11 @@ void FractalInstance::build()
         }
         break;
       }
+    }
+
+    if (i % 1000000 == 0)
+    {
+      cout << (i / (double)num_points * 100) << "% : " << get_max_count() << endl;
     }
   }
 }

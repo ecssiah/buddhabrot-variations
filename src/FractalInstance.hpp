@@ -18,8 +18,6 @@ using namespace std;
 using namespace Eigen;
 using namespace Magick;
 
-using CounterArray = array<array<int, SCREEN_SIZE>, SCREEN_SIZE>;
-
 class FractalInstance
 {  
   void build();
@@ -42,7 +40,7 @@ public:
     double escape_radius = default_radius
   );
 
-  CounterArray counters;
+  vector< vector<unsigned> > counters;
 
   const double get_max_count();
 
