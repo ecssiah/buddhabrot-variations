@@ -4,7 +4,7 @@ This application generates fractals using a variation of the Buddhabrot method d
 
 <img src="examples/example2.png">
 
-Melinda's technique samples points in the complex plane, and then repeatedly applies the Mandelbrot equation to these points to see if they eventually land outside of an escape radius after a certain number of iterations. The method keeps track of how many iterations it took for the point to leave the escape radius. It stores this number in an array which is mapped to the pixels on the screen. This array of values is then used as a heat map to determine the brightness of the image at each pixel.
+Melinda's technique samples points in the complex plane, and then repeatedly applies the Mandelbrot equation to these points to see if they eventually land outside of an escape radius after a certain number of iterations. The method keeps track of how many iterations it took for the point to leave the escape radius. It stores this count in an array which is mapped to the pixels on the screen. This array of values is then used as a heat map to determine the brightness of the image at each pixel.
 
 Here is Melinda's page describing the process and displaying a number of examples: 
 

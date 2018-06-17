@@ -28,10 +28,10 @@ int main(int argc, char** argv)
   
   axis1.normalize();
 
-  FractalInstance::num_points = 4e6;
+  FractalInstance::num_points = 1e6;
   FractalInstance::complex_range = 3.6;
-  FractalInstance::default_radius = 3e2;
-  FractalInstance::default_iterations = 2e2;
+  FractalInstance::default_radius = 3e1;
+  FractalInstance::default_iterations = 2e4;
 
   for (auto frame(0); frame < NUM_FRAMES; ++frame)
   {
