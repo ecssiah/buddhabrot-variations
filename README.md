@@ -10,7 +10,7 @@ Here is Melinda's page describing the process and displaying a number of example
 
 [The Buddhabrot Technique](http://superliminal.com/fractals/bbrot/bbrot.htm)
 
-This application expands her original technique. The equation used to iterate the points is customizable. Any number of terms of varying degrees are combined together along with matching coefficients to create the generating function. On top of this, at each step in the process the previous value is conjugated before applying the equation again.
+This application expands her original technique. It allows for a wide variety of generating functions by combining terms of different degrees. Each term can also have a coefficient applied to it, and at each step in the process the previous value is conjugated before applying the equation again.
 
 Here is an example of a generating function:
 

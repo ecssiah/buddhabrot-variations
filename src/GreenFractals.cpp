@@ -30,8 +30,8 @@ int main(int argc, char** argv)
 
   FractalInstance::num_points = 2.4e6;
   FractalInstance::complex_range = 3.6;
-  FractalInstance::default_radius = 3;
-  FractalInstance::default_iterations = 2e3;
+  FractalInstance::default_radius = 30;
+  FractalInstance::default_iterations = 2e2;
 
   for (auto frame(0); frame < NUM_FRAMES; ++frame)
   {
