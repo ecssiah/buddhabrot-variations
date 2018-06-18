@@ -94,18 +94,29 @@ void FractalInstance::build()
       {
         for (auto c : path)
         {
-          auto left(c.imag() >= viewbox.x - viewbox.w / 2); 
-          auto right(c.imag() <= viewbox.x + viewbox.w / 2);
           auto top(c.real() <= viewbox.y + viewbox.h / 2);
           auto bottom(c.real() >= viewbox.y - viewbox.h / 2);
 
-          if (left && right && top && bottom)
+          if (top && bottom)
           {
-            auto pos1(to_screen_coords(c));
-            auto pos2(to_screen_coords({ c.real(), -c.imag() }));
+            auto left1(c.imag() >= viewbox.x - viewbox.w / 2); 
+            auto right1(c.imag() <= viewbox.x + viewbox.w / 2);
 
-            counters[pos1.x()][pos1.y()] += 1;
-            counters[pos2.x()][pos2.y()] += 1;
+            if (left1 && right1)
+            {
+              auto pos1(to_screen_coords(c));
+              counters[pos1.x()][pos1.y()] += 1;
+            } 
+
+            auto left2(-c.imag() >= viewbox.x - viewbox.w / 2); 
+            auto right2(-c.imag() <= viewbox.x + viewbox.w / 2);
+
+            if (left2 && right2) 
+            {
+              /* auto pos2(to_screen_coords({ c.real(), -c.imag() })); */
+              auto pos2(to_screen_coords(conj(c)));
+              counters[pos2.x()][pos2.y()] += 1;
+            }
           }
         }
         break;
