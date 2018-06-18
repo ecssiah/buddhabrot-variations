@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <sstream>
 #include <iostream>
+#include <ctime>
 
 #include <Eigen/Geometry>
 #include <Magick++.h>
@@ -17,6 +18,18 @@
 using namespace std;
 using namespace Eigen;
 using namespace Magick;
+
+struct ViewBox
+{
+  ViewBox(double x_, double y_, double w_, double h_)
+    : x(x_), y(y_), w(w_), h(h_)
+  {}
+
+  double x;
+  double y;
+  double w;
+  double h;
+};
 
 class FractalInstance
 {  
@@ -29,6 +42,8 @@ class FractalInstance
   unsigned iterations;
   double escape_radius;
 
+  ViewBox viewbox;
+
   vector<double> coefficients;
   vector<double> exponents; 
 
@@ -36,6 +51,7 @@ public:
   FractalInstance(
     vector<double> coefficients = {1, 1, 1}, 
     vector<double> exponents = {3, 2, 1},
+    ViewBox viewbox = {0, 0, complex_range, complex_range},
     unsigned iterations = default_iterations, 
     double escape_radius = default_radius
   );
@@ -46,6 +62,7 @@ public:
 
   void setCoefficients(vector<double> coefficients);
   void setExponents(vector<double> exponents);
+  void setView(double x, double y, double w, double h);
 
   static double default_radius;
   static double complex_range;

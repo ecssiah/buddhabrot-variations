@@ -8,14 +8,18 @@ double FractalInstance::complex_range = 3.6;
 
 FractalInstance::FractalInstance(
   vector<double> coefficients_, vector<double> exponents_,
+  ViewBox viewbox_,
   unsigned iterations_, double escape_radius_ 
 )
   : coefficients(coefficients_),
     exponents(exponents_),
     iterations(iterations_),
+    viewbox(viewbox_),
     escape_radius(escape_radius_),
     counters(SCREEN_SIZE, vector<unsigned>(SCREEN_SIZE))
 {
+  generator.seed(time(nullptr));
+
   build();  
 }
 
@@ -30,13 +34,22 @@ void FractalInstance::setExponents(vector<double> exponents_)
   exponents = exponents_;
 }
 
+void FractalInstance::setView(double x_, double y_, double w_, double h_) 
+{
+  viewbox.x = x_;
+  viewbox.y = y_;
+  viewbox.w = w_;
+  viewbox.h = h_;
+}
+
 Vector2d FractalInstance::to_screen_coords(complex<double> c)
 {
-  auto conversion_factor = SCREEN_SIZE / complex_range; 
+  auto width_conversion = SCREEN_SIZE / viewbox.w;
+  auto height_conversion = SCREEN_SIZE / viewbox.h;
 
   return {
-    conversion_factor * c.real() + SCREEN_SIZE / 2,
-    conversion_factor * c.imag() + SCREEN_SIZE / 2
+    width_conversion * (c.imag() - viewbox.x + viewbox.w / 2),
+    height_conversion * (c.real() - viewbox.y + viewbox.h / 2)
   };
 }
 
@@ -81,17 +94,18 @@ void FractalInstance::build()
       {
         for (auto c : path)
         {
-          auto pos1(to_screen_coords(c));
+          auto left(c.imag() >= viewbox.x - viewbox.w / 2); 
+          auto right(c.imag() <= viewbox.x + viewbox.w / 2);
+          auto top(c.real() <= viewbox.y + viewbox.h / 2);
+          auto bottom(c.real() >= viewbox.y - viewbox.h / 2);
 
-          auto in_x(pos1.x() > 0 && pos1.x() < SCREEN_SIZE);
-          auto in_y(pos1.y() > 0 && pos1.y() < SCREEN_SIZE);
-          
-          if (in_x && in_y)
+          if (left && right && top && bottom)
           {
-            auto pos2(to_screen_coords(conj(c)));
+            auto pos1(to_screen_coords(c));
+            auto pos2(to_screen_coords({ c.real(), -c.imag() }));
 
-            counters[pos1.y()][pos1.x()] += 1;
-            counters[pos2.y()][pos2.x()] += 1;
+            counters[pos1.x()][pos1.y()] += 1;
+            counters[pos2.x()][pos2.y()] += 1;
           }
         }
         break;
