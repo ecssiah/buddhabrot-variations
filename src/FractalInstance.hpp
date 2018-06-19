@@ -67,7 +67,7 @@ public:
   static double default_radius;
   static double complex_range;
 
-  static unsigned num_points;
+  static unsigned long long num_points;
   static unsigned default_iterations;
 };
 

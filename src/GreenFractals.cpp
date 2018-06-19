@@ -16,6 +16,11 @@ using namespace Magick;
 
 vector<FractalInstance> fractals;
 
+// user literal for millions (i.e. 1_m = 10000000)
+constexpr unsigned long long operator "" _m(unsigned long long l) {
+  return l * 1000 * 1000;
+}
+
 int main(int argc, char** argv)
 {
   InitializeMagick(*argv);
@@ -29,15 +34,15 @@ int main(int argc, char** argv)
   Vector3f vec(-1/720.0, -1/24.0, -1/2.0);
   auto vec1(vec);
 
-  FractalInstance::num_points = 1e7;
-  FractalInstance::complex_range = 4.0;
+  FractalInstance::num_points = 20000_m;
+  FractalInstance::complex_range = 6.0;
   FractalInstance::default_radius = 2e0;
   FractalInstance::default_iterations = 1e2;
 
   FractalInstance fi(
-    {-1/36.0, -1/16.0, -1/4.0, -1},
-    {7, 5, 3, 1},
-    {1.6, 0, .40, .40}
+    {1, 1/2.0, 1/6.0, 1/24.0, 1/120.0, 1/720.0, 1/5040.0, 1/40320.0},
+    {1, 2, 3, 4, 5, 6, 7, 8},
+    {0, 0, .56, .56}
   );
 
   ImageGenerator::generate(fi);

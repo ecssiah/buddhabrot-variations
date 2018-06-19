@@ -1,6 +1,6 @@
 #include "FractalInstance.hpp"
 
-unsigned FractalInstance::num_points = 1e6;
+unsigned long long FractalInstance::num_points = 1e6;
 unsigned FractalInstance::default_iterations = 100;
 
 double FractalInstance::default_radius = 1.0;
@@ -113,7 +113,6 @@ void FractalInstance::build()
 
             if (left2 && right2) 
             {
-              /* auto pos2(to_screen_coords({ c.real(), -c.imag() })); */
               auto pos2(to_screen_coords(conj(c)));
               counters[pos2.x()][pos2.y()] += 1;
             }
