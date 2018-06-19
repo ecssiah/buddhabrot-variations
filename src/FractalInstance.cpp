@@ -70,7 +70,7 @@ void FractalInstance::build()
 {
   for (auto& row : counters) fill(row.begin(), row.end(), 0);
   
-  for (auto i(0); i < num_points; ++i)
+  for (unsigned long long i(0); i < num_points; ++i)
   {
     uniform_real_distribution<> dist(-complex_range / 2, complex_range / 2);
     
