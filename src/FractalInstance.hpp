@@ -31,6 +31,7 @@ struct ViewBox
   double h;
 };
 
+
 class FractalInstance
 {  
   void build();
@@ -47,6 +48,8 @@ class FractalInstance
   vector<double> coefficients;
   vector<double> exponents; 
 
+  vector<double> hue;
+
 public:
   FractalInstance(
     vector<double> coefficients = {1, 1, 1}, 
@@ -59,10 +62,12 @@ public:
   vector< vector<unsigned> > counters;
 
   const double get_max_count();
+  const vector<double> get_hue();
 
-  void setCoefficients(vector<double> coefficients);
-  void setExponents(vector<double> exponents);
-  void setView(double x, double y, double w, double h);
+  void set_coefficients(vector<double> coefficients);
+  void set_exponents(vector<double> exponents);
+  void set_view(double x, double y, double w, double h);
+  void set_hue(double r, double g, double b);
 
   static double default_radius;
   static double complex_range;

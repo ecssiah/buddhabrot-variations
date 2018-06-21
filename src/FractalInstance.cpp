@@ -3,8 +3,8 @@
 unsigned long long FractalInstance::num_points = 1e6;
 unsigned FractalInstance::default_iterations = 100;
 
-double FractalInstance::default_radius = 1.0;
-double FractalInstance::complex_range = 3.6;
+double FractalInstance::default_radius = 2.0;
+double FractalInstance::complex_range = 4.0;
 
 FractalInstance::FractalInstance(
   vector<double> coefficients_, vector<double> exponents_,
@@ -16,7 +16,8 @@ FractalInstance::FractalInstance(
     iterations(iterations_),
     viewbox(viewbox_),
     escape_radius(escape_radius_),
-    counters(SCREEN_SIZE, vector<unsigned>(SCREEN_SIZE))
+    counters(SCREEN_SIZE, vector<unsigned>(SCREEN_SIZE)),
+    hue({1.0, 1.0, 1.0})
 {
   generator.seed(time(nullptr));
 
@@ -24,22 +25,32 @@ FractalInstance::FractalInstance(
 }
 
 
-void FractalInstance::setCoefficients(vector<double> coefficients_)
+void FractalInstance::set_coefficients(vector<double> coefficients_)
 {
   coefficients = coefficients_; 
 }
 
-void FractalInstance::setExponents(vector<double> exponents_)
+void FractalInstance::set_exponents(vector<double> exponents_)
 {
   exponents = exponents_;
 }
 
-void FractalInstance::setView(double x_, double y_, double w_, double h_) 
+void FractalInstance::set_view(double x_, double y_, double w_, double h_) 
 {
   viewbox.x = x_;
   viewbox.y = y_;
   viewbox.w = w_;
   viewbox.h = h_;
+}
+
+void FractalInstance::set_hue(double r_, double g_, double b_)
+{
+  hue = {r_, g_, b_};
+}
+
+const vector<double> FractalInstance::get_hue()
+{
+  return hue;
 }
 
 Vector2d FractalInstance::to_screen_coords(complex<double> c)
