@@ -68,9 +68,9 @@ public:
         auto g_value((double)fis[1].counters[x][y] / g_max);
         auto b_value((double)fis[2].counters[x][y] / b_max);
 
-        pixels[3 * (x + y * SCREEN_SIZE) + 0] = fis[0].get_hue()[0] * r_value;
-        pixels[3 * (x + y * SCREEN_SIZE) + 1] = fis[1].get_hue()[1] * g_value;
-        pixels[3 * (x + y * SCREEN_SIZE) + 2] = fis[2].get_hue()[2] * b_value;
+        pixels[3 * (x + y * SCREEN_SIZE) + 0] = r_value;
+        pixels[3 * (x + y * SCREEN_SIZE) + 1] = g_value;
+        pixels[3 * (x + y * SCREEN_SIZE) + 2] = b_value;
       }
     }
 
