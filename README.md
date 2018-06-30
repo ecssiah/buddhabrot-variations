@@ -30,7 +30,7 @@ The application is also set up to produce a series of these fractals, which can 
 
 Here is an example of the animations produced by this technique:
 
-[Fractals in Motion](https://www.youtube.com/watch?v=lS3p8Gt9PLU)
+[Fractals in Motion](https://www.youtube.com/watch?v=NHzehXtsRbo)
 
 # Contributions
 
