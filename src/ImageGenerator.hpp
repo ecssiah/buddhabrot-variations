@@ -22,7 +22,6 @@ public:
   static void generate(FractalInstance& fi, unsigned frame = 0)
   {
     auto max(fi.get_max_count());
-
     double* pixels = new double[3 * SCREEN_SIZE * SCREEN_SIZE];
 
     for (auto x(0); x < SCREEN_SIZE; ++x)
@@ -57,7 +56,6 @@ public:
     auto r_max(fis[0].get_max_count());
     auto g_max(fis[0].get_max_count());
     auto b_max(fis[0].get_max_count());
-
     double* pixels = new double[3 * SCREEN_SIZE * SCREEN_SIZE];
 
     for (auto x(0); x < SCREEN_SIZE; ++x)

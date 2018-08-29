@@ -4,6 +4,10 @@ This application generates fractals using a variation of the Buddhabrot method d
 
 <img src="examples/example1.png">
 
+Here is an example of the animations produced by this technique:
+
+[Fractals in Motion](https://www.youtube.com/watch?v=NHzehXtsRbo)
+
 Melinda's technique samples points in the complex plane, and then repeatedly applies the Mandelbrot equation to these points to see if they eventually land outside of an escape radius after a certain number of iterations.
 
 An array of counters is used to track every point that is hit before a sample point escapes. The size of this array is chosen so that it will map directly to the pixels in the image that is being produced. Every time a point lands within the small area associated with a particular pixel it is incremented by one.
@@ -27,10 +31,6 @@ z = pw<sup>3</sup> + qw<sup>2</sup> + rw + C
 This produces a generalized fractal based on the method developed by Green. I have called the range of fractals generated using this expanded method: Green Fractals.
 
 The application is also set up to produce a series of these fractals, which can be combined together to create animations. The general approach is to treat the coefficients of the generating function as a vector <p, q, r>, and then transform this vector by small amounts to produce slight variations. This series of fractals can then be combined together to form a smooth animation.
-
-Here is an example of the animations produced by this technique:
-
-[Fractals in Motion](https://www.youtube.com/watch?v=NHzehXtsRbo)
 
 # Contributions
 
