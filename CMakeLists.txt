@@ -3,9 +3,9 @@ project (GreenFractals)
 
 set(
   HEADERS
-  ./src/Constants.hpp
-  ./src/FractalInstance.hpp
-  ./src/ImageGenerator.hpp
+  ./src/Constants.h
+  ./src/FractalInstance.h
+  ./src/ImageGenerator.h
 )
 
 set(
@@ -15,6 +15,7 @@ set(
 )
 
 set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED YES)
 
 add_executable(GreenFractals ${HEADERS} ${SOURCES})
 

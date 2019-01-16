@@ -9,16 +9,14 @@
 
 #include <Magick++.h>
 
-#include "Constants.hpp"
-#include "FractalInstance.hpp"
+#include "Constants.h"
+#include "FractalInstance.h"
 
 using namespace std;
 
 class ImageGenerator
 {
-
 public:
-
   static void generate(FractalInstance& fi, unsigned frame = 0)
   {
     auto max(fi.get_max_count());

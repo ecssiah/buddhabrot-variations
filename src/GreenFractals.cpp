@@ -6,9 +6,9 @@
 #include <Eigen/Geometry>
 #include <Magick++.h>
 
-#include "Constants.hpp"
-#include "ImageGenerator.hpp"
-#include "FractalInstance.hpp"
+#include "Constants.h"
+#include "ImageGenerator.h"
+#include "FractalInstance.h"
 
 using namespace std;
 using namespace Eigen;

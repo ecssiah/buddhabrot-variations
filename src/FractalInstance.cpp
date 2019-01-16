@@ -1,4 +1,4 @@
-#include "FractalInstance.hpp"
+#include "FractalInstance.h"
 
 unsigned long long FractalInstance::num_points = 1e6;
 unsigned FractalInstance::default_iterations = 100;
